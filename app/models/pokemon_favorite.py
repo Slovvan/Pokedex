@@ -5,6 +5,7 @@ class PokemonFavorites(SuperClass):
     def __init__(self):
         super().__init__("pokemon_favorites")
 
-    
+    def update(self, object_id, data):
+       raise NotImplementedError("Los pokemones no se pueden actulizar")
 
     
