@@ -17,7 +17,7 @@ def register():
     try:
         data = pokemon_favorite_schema.load(request.json)
         pokemon_id= pokemon_favorite_model.create(data)
-        return jsonify({"user_id":str(pokemon_id)}, 200)
+        return jsonify({"pokemon_id":str(pokemon_id)}, 200)
     
     except ValidationError as error:
         return jsonify("Los parametros enviados son ncorrectos", 400)
