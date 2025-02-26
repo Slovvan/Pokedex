@@ -19,7 +19,7 @@ class SuperClass:
     
     def create(self, datum):
         datum = self.collection.insert_one(datum)
-        return datum.inserted_id
+        return str[datum.inserted_id]
     
     
     def update(self, object_id, data):
@@ -28,6 +28,7 @@ class SuperClass:
         },{
             "$set": data
         })
+        datum["_id"] = str(datum["_id"])
         return datum
     
     

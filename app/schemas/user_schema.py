@@ -1,6 +1,6 @@
-from marshmallow import schema, fields, ValidationError
+from marshmallow import Schema, fields, ValidationError
 
-class UserSchema(schema):
+class UserSchema(Schema):
     name = fields.Str(
         #requerimientos a validar
         required= True,
@@ -17,7 +17,7 @@ class UserSchema(schema):
             "required": "La contraseña es requerido"
         }
     )
-    email = fields.Str(
+    email = fields.Email(
         #requerimientos a validar
         required= True,
         validate= lambda x: "@utma.edu.mx" in x,
