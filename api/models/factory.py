@@ -1,6 +1,6 @@
-from app.models.pokemon import Pokemon
-from app.models.pokemon_favorite import PokemonFavorites
-from app.models.users import User
+from api.models.pokemon import Pokemon
+from api.models.pokemon_favorite import PokemonFavorites
+from api.models.users import User
 
 class ModelFactory:
     @staticmethod

@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify 
-from app.models.factory import ModelFactory
-from app.tools.response_manager import ResponseManager
+from api.models.factory import ModelFactory
+from api.tools.response_manager import ResponseManager
 from bson import ObjectId
 from flask_jwt_extended import jwt_required
 

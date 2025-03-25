@@ -20,7 +20,7 @@ def create_app():
     mongo.init_app(app)
     jwt.init_app(app)
 
-    from app.controllers import(
+    from api.controllers import(
         pokemon_controller,
         pokemon_favorite_controller,
         users_controller

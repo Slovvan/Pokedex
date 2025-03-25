@@ -1,5 +1,5 @@
-from app import mongo
-from app.models.super_class import SuperClass
+from api import mongo
+from api.models.super_class import SuperClass
 
 class User(SuperClass):
     def __init__(self):

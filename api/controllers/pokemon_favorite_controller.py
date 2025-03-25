@@ -2,9 +2,9 @@
 #eliminar
 #get all
 from flask import Blueprint, request
-from app.schemas.pokemon_favorites_schema import PokemonFavoriteSchema
-from app.models.factory import ModelFactory
-from app.tools.response_manager import ResponseManager
+from api.schemas.pokemon_favorites_schema import PokemonFavoriteSchema
+from api.models.factory import ModelFactory
+from api.tools.response_manager import ResponseManager
 from marshmallow import ValidationError
 from bson import ObjectId
 from flask_jwt_extended import jwt_required, get_jwt_identity

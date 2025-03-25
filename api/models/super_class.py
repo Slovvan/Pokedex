@@ -1,4 +1,4 @@
-from app import mongo
+from api import mongo
 
 class SuperClass:
     def __init__(self, collection):

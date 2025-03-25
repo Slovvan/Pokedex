@@ -1,11 +1,11 @@
 from flask import Blueprint #seccionar servidor en diferentes urls
 from flask import request, jsonify #manejar las respuestas del servidor
-from app.schemas.user_schema import UserSchema
-from app.models.factory import ModelFactory
-from app.tools.encryption_manager import encryptionManager
+from api.schemas.user_schema import UserSchema
+from api.models.factory import ModelFactory
+from api.tools.encryption_manager import encryptionManager
 from marshmallow import ValidationError
 from bson import ObjectId
-from app.tools.response_manager import ResponseManager
+from api.tools.response_manager import ResponseManager
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 RM = ResponseManager()
