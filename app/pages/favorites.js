@@ -27,7 +27,7 @@ const typeColors = {
 
 
 
-export default function List() {
+export default function Favorites() {
     const [loading, setLoading] = useState(false)
     const {navigate} = useNavigation()
     const [pokemons, setPokemons] = useState([]);
@@ -38,7 +38,7 @@ export default function List() {
     const getData = async () => {
         try {
             setLoading(true)
-            const { data } = await request.get("/pokemon/");
+            const { data } = await request.get("/pokemon_favorites/get_pokemons");
             setPokemons(data);
         } catch (error) {
             Alert.alert("Ocurrrio un error al obtener los pokemones", "No se puedieron obtener los pokemones")

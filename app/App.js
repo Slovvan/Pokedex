@@ -1,10 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Pressable, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import axios from 'axios';
+import { request } from './requests';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
 
-  const navigate = useNavigation()
+  const [data, setData] = useState({})
+  const [loading, setLoading] = useState(false)
+
+  const onchange = (target, value)=>{
+    const nData = data
+
+    nData[target] = value
+    console.log(nData)
+    setData(nData)
+  }
+
+  const submit = async ()=>{
+    try {
+      setLoading(true)
+      const res = await request.post("/users/login", data)
+      const {token} = res.data
+      AsyncStorage.setItem("token", token)
+
+      navigate('Tabs')
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Ocurrió un error", "El Usuario o la Contraseña no son correctos", )
+    }
+      setLoading(false)
+  }
+
+  const {navigate} = useNavigation()
   
   return (
     <View style={style.container}>
@@ -16,18 +46,18 @@ export default function App() {
         <View>
           <Text style={style.title}>Iniciar sesion</Text>
           <Text style={style.label}>Correo</Text>
-          <TextInput style={style.Input} placeholder='Escribe tu Correo'></TextInput>
+          <TextInput style={style.Input} onChangeText={(text)=>{onchange("email", text)}} placeholder='Escribe tu Correo' autoCapitalize='none'></TextInput>
           <Text style={style.label}>Contraseña</Text>
-          <TextInput style={style.Input} placeholder='Escribe tu Contraseña'></TextInput>
-          <Pressable style={style.send}  onPress={() => navigate.navigate('List')}>
+          <TextInput style={style.Input} onChangeText={(text)=>{onchange("password", text)}} placeholder='Escribe tu Contraseña' secureTextEntry></TextInput>
+          <Pressable style={style.send}  onPress={() => submit()} disabled={loading}>
             <Text style={style.send.textButton}>Enviar</Text>
           </Pressable>
         </View>
         <View style={style.containerFooter}>
-          <TouchableOpacity  onPress={() => navigate.navigate('Recovery')} >
+          <TouchableOpacity  onPress={() => navigate('Recovery')} >
           <Text style={style.containerFooter.texts}>¿Olvidaste tu contraseña?</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigate.navigate('Register')}>
+          <TouchableOpacity onPress={() => navigate('Register')}>
           <Text style={style.containerFooter.texts}>Registrate</Text>
           </TouchableOpacity>
             
@@ -40,6 +70,7 @@ export default function App() {
 
 const style = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
     backgroundColor: '#fff',
     alignItems: 'center',

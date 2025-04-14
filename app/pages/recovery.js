@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function Recovery() {
 
-  const navigate = useNavigation()
+  const {navigate} = useNavigation()
 
   return (
     <View style={style.container}>
@@ -21,12 +21,12 @@ export default function Recovery() {
           <TextInput style={style.Input} placeholder='Escribe una Contraseña'></TextInput>
           <Text style={style.label}>Confirmar Contraseña</Text>
           <TextInput style={style.Input} placeholder='Vuelve a Escribir tu Contraseña'></TextInput>
-          <Pressable style={style.send} onPress={() => navigate.navigate('App')}>
+          <Pressable style={style.send} onPress={() => navigate('App')}>
             <Text style={style.send.textButton}>Recuperar Contraseña</Text>
           </Pressable>
         </View>
         <View style={style.containerFooter}>7
-        <Pressable style={style.send} onPress={() => navigate.navigate('App')}>
+        <Pressable style={style.send} onPress={() => navigate('App')}>
           <Text style={style.containerFooter.texts}>Cancelar</Text>
         </Pressable>
         </View>
@@ -38,6 +38,7 @@ export default function Recovery() {
 
 const style = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
     backgroundColor: '#fff',
     alignItems: 'center',

@@ -33,3 +33,5 @@ def create_app():
     CORS(app)
     return app
 
+create_app()
+

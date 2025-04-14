@@ -1,10 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Pressable } from 'react-native';
+import { StyleSheet, Text, View, Image, TextInput, TouchableOpacity, Pressable, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useState } from 'react';
+import { request } from '../requests';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Register() {
+  const [data, setData] = useState({})
+  const [loading, setLoading] = useState(false)
 
-  const navigate = useNavigation()
+  const onchange = (target, value)=>{
+    const nData = data
+
+    nData[target] = value
+    setData(nData)
+  }
+
+  const submit = async ()=>{
+    console.log(data)
+    try {
+      setLoading(true)
+
+      const res = await request.post("/users/register", data)
+      const {token} = res.data
+      AsyncStorage.setItem("token", token)
+
+      navigate('App')
+    } catch (error) {
+      console.log(error)
+      Alert.alert("Ocurrió un error", "Datos insuficientes", )
+    }
+      setLoading(false)
+  }
+
+
+  const {navigate} = useNavigation()
   return (
     <View style={style.container}>
       <View>
@@ -15,19 +45,19 @@ export default function Register() {
         <View>
           <Text style={style.title}>Registro</Text>
           <Text style={style.label}>Correo</Text>
-          <TextInput style={style.Input} placeholder='Escribe tu Correo'></TextInput>
+          <TextInput style={style.Input} onChangeText={(text)=>{onchange("email", text)}}  placeholder='Escribe tu Correo'  autoCapitalize='none'></TextInput>
           <Text style={style.label}>Nombre</Text>
-          <TextInput style={style.Input} placeholder='Escribe tu Nombre'></TextInput>
+          <TextInput style={style.Input} onChangeText={(text)=>{onchange("name", text)}} placeholder='Escribe tu Nombre' autoCapitalize='none'></TextInput>
           <Text style={style.label}>Contraseña</Text>
-          <TextInput style={style.Input} placeholder='Escribe una Contraseña'></TextInput>
+          <TextInput style={style.Input} onChangeText={(text)=>{onchange("password", text)}} placeholder='Escribe una Contraseña' secureTextEntry></TextInput>
           <Text style={style.label}>Confirmar Contraseña</Text>
-          <TextInput style={style.Input} placeholder='Vuelve a Escribir tu Contraseña'></TextInput>
-          <Pressable style={style.send} onPress={() => navigate.navigate('App')}>
+          <TextInput style={style.Input} placeholder='Vuelve a Escribir tu Contraseña' secureTextEntry></TextInput>
+          <Pressable style={style.send} onPress={() => submit()}>
             <Text style={style.send.textButton}>Registrarse</Text>
           </Pressable>
         </View>
         <View style={style.containerFooter}>
-          <Pressable onPress={() => navigate.navigate('App')}>
+          <Pressable onPress={() => navigate('App')}>
           <Text style={style.containerFooter.texts}>¿Ya tienes Cuenta?</Text>
           </Pressable>
             
@@ -40,6 +70,7 @@ export default function Register() {
 
 const style = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10,
     backgroundColor: '#fff',
     alignItems: 'center',
